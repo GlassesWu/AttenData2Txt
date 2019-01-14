@@ -75,7 +75,7 @@ else:
         MessageBox(0, '         文档内容无效', '', MB_OK)
 
     else:
-        filename = number_list[0][7:11] + '年' + number_list[0][12:13] + '月' + '考勤转换数据.txt'
+        filename = number_list[0][7:11] + '年' + number_list[0][11:13] + '月' + '考勤转换数据.txt'
         file = open(filename, 'w')
         file.write('\n'.join(number_list))
         file.close()
