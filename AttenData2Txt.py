@@ -36,37 +36,37 @@ else:
         max_column = sheet1.max_column
 
         # 选取特定列（考勤号码、日期、签到时间、签退时间）
-        zlist = [2, 6, 10, 11, ]
+        zlist = [2, 4, 8, 9, ]
 
         number_list = []
 
-        for m in range(2, max_row+1):
-            cell1 = "%08d" % int(sheet1.cell(m, 2).value)
-            cell2 = sheet1.cell(m, 6).value
-            mat2 = match(r'^(\d{4})-(\d{1,2})-(\d{1,2})$', str(cell2))
-            a = "%02d" % int(mat2.group(2))
-            b = "%02d" % int(mat2.group(3))
-            c = mat2.group(1) + a + b
-            cell3 = sheet1.cell(m, 10).value
+        for m in range(3, max_row+1):
+            serial_num = "%08d" % int(sheet1.cell(m, 2).value)
+            date_obj = match(r'^(\d{4})-(\d{1,2})-(\d{1,2})$', str(sheet1.cell(m, 4).value))
+            year = int(date_obj.group(1))
+            mon = "%02d" % int(date_obj.group(2))
+            day = "%02d" % int(date_obj.group(3))
+            date = year + mon + day
+            clock_in = sheet1.cell(m, 8).value
 
-            if cell3.strip() == '':
+            if clock_in.strip() == '':
                 pass
 
             else:
-                mat3 = match(r'^(\d{2}):(\d{2})$', cell3)
-                e = 'P100001' + c + str(mat3.group(1)) + str(mat3.group(2)) + '00' + c + str(mat3.group(1)) + \
-                    str(mat3.group(2)) + '00' + cell1
-                number_list.append(e)
-            cell4 = sheet1.cell(m, 11).value
+                time_obj = match(r'^(\d{2}):(\d{2}):(\d{2})$', clock_in)
+                convert_data = 'P100001' + date + str(convert_data.group(1)) + str(convert_data.group(2)) + str(convert_data.group(3)) + date + str(convert_data.group(1)) + \
+                    str(convert_data.group(2)) + str(convert_data.group(3)) + serial_num
+                number_list.append(convert_data)
+            clock_out = sheet1.cell(m, 9).value
 
-            if cell4.strip() == '':
+            if clock_out.strip() == '':
                 pass
 
             else:
-                mat4 = match(r'^(\d{2}):(\d{2})$', cell4)
-                f = 'P200001' + c + str(mat4.group(1)) + str(mat4.group(2)) + '00' + c + str(mat4.group(1)) + \
-                    str(mat4.group(2)) + '00' + cell1
-                number_list.append(f)
+                time_obj = match(r'^(\d{2}):(\d{2}):(\d{2})$', clock_out)
+                convert_data = 'P200001' + c + str(convert_data.group(1)) + str(convert_data.group(2)) + '00' + c + str(convert_data.group(1)) + \
+                    str(convert_data.group(2)) + str(convert_data.group(3)) + serial_num
+                number_list.append(convert_data)
         # 关闭excel
         wb1.close()
 
