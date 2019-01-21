@@ -43,29 +43,29 @@ else:
         for m in range(3, max_row+1):
             serial_num = "%08d" % int(sheet1.cell(m, 2).value)
             date_obj = match(r'^(\d{4})-(\d{1,2})-(\d{1,2})$', str(sheet1.cell(m, 4).value))
-            year = int(date_obj.group(1))
+            year = date_obj.group(1)
             mon = "%02d" % int(date_obj.group(2))
             day = "%02d" % int(date_obj.group(3))
             date = year + mon + day
             clock_in = sheet1.cell(m, 8).value
 
-            if clock_in.strip() == '':
+            if clock_in == None:
                 pass
 
             else:
                 time_obj = match(r'^(\d{2}):(\d{2}):(\d{2})$', clock_in)
-                convert_data = 'P100001' + date + str(convert_data.group(1)) + str(convert_data.group(2)) + str(convert_data.group(3)) + date + str(convert_data.group(1)) + \
-                    str(convert_data.group(2)) + str(convert_data.group(3)) + serial_num
+                convert_data = 'P100001' + date + str(time_obj.group(1)) + str(time_obj.group(2)) + str(time_obj.group(3)) + date + str(time_obj.group(1)) + \
+                    str(time_obj.group(2)) + str(time_obj.group(3)) + serial_num
                 number_list.append(convert_data)
             clock_out = sheet1.cell(m, 9).value
 
-            if clock_out.strip() == '':
+            if clock_out == None:
                 pass
 
             else:
                 time_obj = match(r'^(\d{2}):(\d{2}):(\d{2})$', clock_out)
-                convert_data = 'P200001' + c + str(convert_data.group(1)) + str(convert_data.group(2)) + '00' + c + str(convert_data.group(1)) + \
-                    str(convert_data.group(2)) + str(convert_data.group(3)) + serial_num
+                convert_data = 'P200001' + date + str(time_obj.group(1)) + str(time_obj.group(2)) + str(time_obj.group(3)) + date + str(time_obj.group(1)) + \
+                    str(time_obj.group(2)) + str(time_obj.group(3)) + serial_num
                 number_list.append(convert_data)
         # 关闭excel
         wb1.close()
