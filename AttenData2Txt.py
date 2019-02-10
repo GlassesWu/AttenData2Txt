@@ -48,22 +48,22 @@ else:
             day = "%02d" % int(date_obj.group(3))
             date = year + mon + day
             clock_in = sheet1.cell(m, 8).value
+            clock_out = sheet1.cell(m, 9).value
 
             if clock_in == None:
                 pass
 
             else:
-                time_obj = match(r'^(\d{2}):(\d{2}):(\d{2})$', clock_in)
+                time_obj = match(r'^(\d{2}):(\d{2}):(\d{2})$', str(clock_in))
                 convert_data = 'P100001' + date + str(time_obj.group(1)) + str(time_obj.group(2)) + str(time_obj.group(3)) + date + str(time_obj.group(1)) + \
                     str(time_obj.group(2)) + str(time_obj.group(3)) + serial_num
-                number_list.append(convert_data)
-            clock_out = sheet1.cell(m, 9).value
+                number_list.append(convert_data)            
 
             if clock_out == None:
                 pass
 
             else:
-                time_obj = match(r'^(\d{2}):(\d{2}):(\d{2})$', clock_out)
+                time_obj = match(r'^(\d{2}):(\d{2}):(\d{2})$', str(clock_out))
                 convert_data = 'P200001' + date + str(time_obj.group(1)) + str(time_obj.group(2)) + str(time_obj.group(3)) + date + str(time_obj.group(1)) + \
                     str(time_obj.group(2)) + str(time_obj.group(3)) + serial_num
                 number_list.append(convert_data)
